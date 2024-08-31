@@ -1,1 +1,88 @@
 
+pipeline
+{
+        stages
+        {
+            stage('git clone')
+            {
+                steps
+                {
+                    git branch: 'master' , url : 'https://github.com/Sunilshetty-Devops/Amazon-Kuber.git'
+                }
+                    
+            }
+            stage('Building Project')
+            {
+                steps
+                {
+                    sh 'mvn clean install -DskipTests' 
+                }
+            }
+            stage('Amazon Build')
+            {
+                steps
+                {
+                    sh 'Amazon'
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
+            stage('SKY Build')
+            {
+                steps
+                {
+                    sh 'cd SKY'
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
+            stage('SpringCore Build')
+            {
+                steps
+                {
+                    sh 'SpringCore'
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
+            stage('SpringDemo Build')
+            {
+                steps
+                {
+                    sh 'SpringDemo'
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
+
+            stage('SpringNew Build')
+            {
+                steps
+                {
+                    sh 'SpringNew'
+                    sh 'mvn clean install -DskipTests'
+                }
+            }            
+            stage('Test Build')
+            {
+                steps
+                {
+                    sh 'Test'
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
+            stage('test Build')
+              {
+                steps
+                {
+                    sh 'cd test'
+                    sh 'mvn clean install -DskipTests'
+                }     
+              }
+            stage('email notification')
+            {
+                steps
+                {
+                    mail to : 'sunilkumar123.shetty@gmail.com',
+                    subject : 'mail notifications' , 
+                    body : 'build Successful'
+                }
+            }
+      }
+}
